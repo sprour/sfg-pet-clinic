@@ -6,6 +6,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class Person {
 
+    private Long id;
+
     @Column(name="first_name")
 
     private String firstName;

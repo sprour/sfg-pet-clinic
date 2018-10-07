@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class Pet {
 
+    private Long id;
+
     private LocalDate birthDate;
 
     private PetType type;
