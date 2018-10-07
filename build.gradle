@@ -1,3 +1,5 @@
+apply plugin: 'net.researchgate.release'
+
 //subprojects{
 //    group 'guru.springframework'
 //
@@ -38,13 +40,14 @@
 //    subprojects.build
 //}
 subprojects {
+    group = 'guru.springframework'
+    version = '0.0.1-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'io.spring.dependency-management'
 
-    group = 'guru.springframework'
-    version = '0.0.1-SNAPSHOT'
-    //sourceCompatibility = 8
 
     ext {
         springBootVersion = '2.0.5.RELEASE'
@@ -54,6 +57,29 @@ subprojects {
     }
 }
 
+buildscript{
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies{
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE'
+        classpath 'net.researchgate:gradle-release:2.6.0'
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
+    }
+}
+
 task build {
     subprojects.build
 }
+
+release{
+    failOnUnversionedFiles = false
+    tagTemplate = "$name-$version"
+}
+
+afterReleaseBuild{
+    dependsOn subprojects.uploadArchives
+}
+
+
